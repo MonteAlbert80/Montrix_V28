@@ -86,11 +86,11 @@ public class OfflineTexasMapView extends FrameLayout {
 
             ready=true;
             Log.i(TAG,"V24 map ready zoom=16 cache=64 geographic-marker theme=MOTORIDER bytes="+f.length());
-        } catch(Throwable e) { Log.e(TAG,"offline map init failed",e); message("OFFLINE MAP ERROR"); }
+        } catch(Throwable e) { Log.e(TAG,"offline map init failed",e); message("OFFLINE MAP ERROR: "+e.getClass().getSimpleName()+": "+String.valueOf(e.getMessage())); }
     }
 
     public void setOnManualMove(Runnable r){manualMoveListener=r;}
-    private void message(String s){TextView t=new TextView(getContext());t.setText(s+"\nRun install_v21.ps1 to install the Texas map");t.setTextColor(0xffd9e7f2);t.setTextSize(16);t.setGravity(Gravity.CENTER);addView(t,new FrameLayout.LayoutParams(-1,-1));}
+    private void message(String s){TextView t=new TextView(getContext());/* MONTRIX_V28_MAP_DIAGNOSTIC */ t.setText(s+"\nExpected: /sdcard/ASURE/maps/texas.map\nCheck map file and logcat tag ASURE_OFFLINE_MAP");t.setTextColor(0xffd9e7f2);t.setTextSize(16);t.setGravity(Gravity.CENTER);addView(t,new FrameLayout.LayoutParams(-1,-1));}
     public boolean isReady(){return ready;}
 
     public void zoomBy(int d){

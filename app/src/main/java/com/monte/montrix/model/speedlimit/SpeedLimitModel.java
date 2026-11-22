@@ -1,14 +1,12 @@
 package com.monte.montrix.model.speedlimit;
-/** Immutable, presentation-ready state for the SpeedLimit dashboard component.
- * All values are supplied by the corresponding service; this class performs no calculations.
- */
-public final class SpeedLimitModel {
-    /** Preformatted text supplied by the service layer. */
-    public final String limitText;
-    /** Creates a state snapshot without modifying its data.
-     * @param limitText preformatted service-provided value
-     */
-    public SpeedLimitModel(String limitText) {
-        this.limitText = limitText == null ? "" : limitText;
-    }
+import com.monte.montrix.model.ObservableModel;
+/** Observable presentation state for SpeedLimit; receives prepared values from a coordinator. */
+public final class SpeedLimitModel extends ObservableModel {
+ /** Original dashboard snapshot. */ public final String limitText;
+ public SpeedLimitModel(){this.limitText="";}
+ public SpeedLimitModel(String text){this.limitText=text==null?"":text;this.primary=this.limitText;}
+ /** Display-ready primary text. */ public String primary="--";
+ /** Display-ready secondary text. */ public String secondary="";
+ /** Updates the state without calculations. @param main primary text @param detail secondary text */
+ public void update(String main,String detail){primary=main;secondary=detail;changed();}
 }

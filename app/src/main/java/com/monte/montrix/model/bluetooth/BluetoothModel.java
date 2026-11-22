@@ -1,14 +1,9 @@
 package com.monte.montrix.model.bluetooth;
-/** Immutable, presentation-ready state for the Bluetooth dashboard component.
- * All values are supplied by the corresponding service; this class performs no calculations.
- */
-public final class BluetoothModel {
-    /** Preformatted text supplied by the service layer. */
-    public final String connectionText;
-    /** Creates a state snapshot without modifying its data.
-     * @param connectionText preformatted service-provided value
-     */
-    public BluetoothModel(String connectionText) {
-        this.connectionText = connectionText == null ? "" : connectionText;
-    }
+import com.monte.montrix.model.ObservableModel;
+/** Observable presentation state for Bluetooth; receives prepared values from a coordinator. */
+public final class BluetoothModel extends ObservableModel {
+ /** Display-ready primary text. */ public String primary="--";
+ /** Display-ready secondary text. */ public String secondary="";
+ /** Updates the state without calculations. @param main primary text @param detail secondary text */
+ public void update(String main,String detail){primary=main;secondary=detail;changed();}
 }

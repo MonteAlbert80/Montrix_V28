@@ -1,13 +1,15 @@
 package com.monte.montrix.view.album;
-import android.widget.ImageView;
+import android.content.Context;
+import android.graphics.Color;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.monte.montrix.model.album.PictureAlbumModel;
-/** Renders the active album picture and its associated caption. */
-public final class PictureAlbumView {
- /** Picture widget. */ private final ImageView image;
- /** Caption widget. */ private final TextView caption;
- /** Creates the album view. @param image image widget @param caption caption widget */
- public PictureAlbumView(ImageView image,TextView caption){this.image=image;this.caption=caption;}
- /** Renders supplied album state. @param model immutable snapshot */
- public void render(PictureAlbumModel model){PictureAlbumModel.Picture current=model.current();if(current==null){image.setImageDrawable(null);caption.setText("");return;}image.setImageURI(current.uri);caption.setText(current.caption);}
+/** Visual-only PictureAlbum component. No services, hardware or business calculations. */
+public final class PictureAlbumView extends LinearLayout {
+ /** Bound presentation state. */ private final PictureAlbumModel model;
+ /** Primary label. */ private final TextView primary;
+ /** Secondary label. */ private final TextView secondary;
+ /** Constructs the component. @param context Android context @param state observable state */
+ public PictureAlbumView(Context context,PictureAlbumModel state){super(context);model=state;setOrientation(VERTICAL);setPadding(12,8,12,8);setBackgroundColor(Color.rgb(12,23,34));TextView heading=new TextView(context);heading.setText("PictureAlbum");heading.setTextColor(Color.rgb(110,195,255));heading.setTextSize(13);addView(heading);primary=new TextView(context);primary.setTextColor(Color.WHITE);primary.setTextSize(20);addView(primary);secondary=new TextView(context);secondary.setTextColor(Color.LTGRAY);secondary.setTextSize(13);addView(secondary);model.addListener(this::render);render();}
+ /** Renders state without transforming it. */ public void render(){primary.setText(model.primary);secondary.setText(model.secondary);}
 }

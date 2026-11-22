@@ -1,14 +1,9 @@
 package com.monte.montrix.model.clock;
-/** Immutable, presentation-ready state for the Clock dashboard component.
- * All values are supplied by the corresponding service; this class performs no calculations.
- */
-public final class ClockModel {
-    /** Preformatted text supplied by the service layer. */
-    public final String clockText;
-    /** Creates a state snapshot without modifying its data.
-     * @param clockText preformatted service-provided value
-     */
-    public ClockModel(String clockText) {
-        this.clockText = clockText == null ? "" : clockText;
-    }
+import com.monte.montrix.model.ObservableModel;
+/** Observable presentation state for Clock; receives prepared values from a coordinator. */
+public final class ClockModel extends ObservableModel {
+ /** Display-ready primary text. */ public String primary="--";
+ /** Display-ready secondary text. */ public String secondary="";
+ /** Updates the state without calculations. @param main primary text @param detail secondary text */
+ public void update(String main,String detail){primary=main;secondary=detail;changed();}
 }

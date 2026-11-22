@@ -12,6 +12,7 @@
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.HOME"/><category android:name="android.intent.category.DEFAULT"/></intent-filter>
   </activity>
+  <activity android:name="com.monte.montrix.RefactorDashboardActivity" android:label="Montrix V28 Architecture Preview" android:screenOrientation="landscape" android:exported="true"/>
   <activity android:name="com.monte.montrix.MainActivity" android:screenOrientation="landscape" android:exported="true"/>
   <activity android:name="com.monte.montrix.RadioActivity" android:label="Radio" android:icon="@drawable/radio_art" android:exported="true" android:excludeFromRecents="true"/>
   <activity android:name="com.monte.montrix.MusicActivity" android:label="Music" android:icon="@drawable/music_art" android:exported="true" android:excludeFromRecents="true"/>

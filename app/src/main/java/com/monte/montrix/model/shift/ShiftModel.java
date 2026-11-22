@@ -1,14 +1,9 @@
 package com.monte.montrix.model.shift;
-/** Immutable, presentation-ready state for the Shift dashboard component.
- * All values are supplied by the corresponding service; this class performs no calculations.
- */
-public final class ShiftModel {
-    /** Preformatted text supplied by the service layer. */
-    public final String statusText;
-    /** Creates a state snapshot without modifying its data.
-     * @param statusText preformatted service-provided value
-     */
-    public ShiftModel(String statusText) {
-        this.statusText = statusText == null ? "" : statusText;
-    }
+import com.monte.montrix.model.ObservableModel;
+/** Observable presentation state for Shift; receives prepared values from a coordinator. */
+public final class ShiftModel extends ObservableModel {
+ /** Display-ready primary text. */ public String primary="--";
+ /** Display-ready secondary text. */ public String secondary="";
+ /** Updates the state without calculations. @param main primary text @param detail secondary text */
+ public void update(String main,String detail){primary=main;secondary=detail;changed();}
 }

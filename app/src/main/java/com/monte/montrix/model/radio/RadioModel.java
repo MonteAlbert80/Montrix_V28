@@ -1,14 +1,9 @@
 package com.monte.montrix.model.radio;
-/** Immutable, presentation-ready state for the Radio dashboard component.
- * All values are supplied by the corresponding service; this class performs no calculations.
- */
-public final class RadioModel {
-    /** Preformatted text supplied by the service layer. */
-    public final String frequencyText;
-    /** Creates a state snapshot without modifying its data.
-     * @param frequencyText preformatted service-provided value
-     */
-    public RadioModel(String frequencyText) {
-        this.frequencyText = frequencyText == null ? "" : frequencyText;
-    }
+import com.monte.montrix.model.ObservableModel;
+/** Observable presentation state for Radio; receives prepared values from a coordinator. */
+public final class RadioModel extends ObservableModel {
+ /** Display-ready primary text. */ public String primary="--";
+ /** Display-ready secondary text. */ public String secondary="";
+ /** Updates the state without calculations. @param main primary text @param detail secondary text */
+ public void update(String main,String detail){primary=main;secondary=detail;changed();}
 }

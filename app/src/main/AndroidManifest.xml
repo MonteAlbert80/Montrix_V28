@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+ <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+ <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+ <uses-permission android:name="android.permission.INTERNET"/>
+ <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+ <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+ <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+ <queries><package android:name="com.syu.radio"/><package android:name="com.syu.bt"/><package android:name="com.syu.ss"/><package android:name="com.syu.ms"/><package android:name="com.syu.canbus"/><intent><action android:name="com.syu.ms.toolkit"/></intent></queries>
+ <application android:theme="@style/AppTheme" android:label="Montrix" android:allowBackup="false" android:largeHeap="true" android:usesCleartextTraffic="true">
+  <activity android:name="com.monte.montrix.DashboardActivity" android:label="Montrix Dashboard" android:screenOrientation="landscape" android:exported="true" android:launchMode="singleTask" android:configChanges="orientation|screenSize">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.HOME"/><category android:name="android.intent.category.DEFAULT"/></intent-filter>
+  </activity>
+  <activity android:name="com.monte.montrix.MainActivity" android:screenOrientation="landscape" android:exported="true"/>
+  <activity android:name="com.monte.montrix.RadioActivity" android:label="Radio" android:icon="@drawable/radio_art" android:exported="true" android:excludeFromRecents="true"/>
+  <activity android:name="com.monte.montrix.MusicActivity" android:label="Music" android:icon="@drawable/music_art" android:exported="true" android:excludeFromRecents="true"/>
+  <activity android:name="com.monte.montrix.ToggleActivity" android:exported="true" android:excludeFromRecents="true"/>
+  <service android:name="com.monte.montrix.NativeRadioService" android:exported="false"/>
+  <receiver android:name="com.monte.montrix.BootReceiver" android:exported="true"><intent-filter><action android:name="android.intent.action.BOOT_COMPLETED"/></intent-filter></receiver>
+ </application>
+</manifest>

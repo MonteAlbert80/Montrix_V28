@@ -1,0 +1,10 @@
+plugins { id 'com.android.application' }
+android { namespace 'com.monte.montrix'; compileSdk 35
+    defaultConfig { applicationId 'com.monte.montrix'; minSdk 23; targetSdk 27; versionCode 280000; versionName '28.0.0-dev' }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
+}
+dependencies {
+    implementation 'org.mapsforge:mapsforge-map-android:0.25.0'
+    implementation 'org.mapsforge:mapsforge-map-reader:0.25.0'
+    implementation 'org.mapsforge:mapsforge-themes:0.25.0'
+}

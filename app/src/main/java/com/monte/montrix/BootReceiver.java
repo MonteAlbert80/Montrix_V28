@@ -1,0 +1,1 @@
+package com.monte.montrix; import android.content.*; import android.os.Build; public class BootReceiver extends BroadcastReceiver{public void onReceive(Context c,Intent x){DiagnosticLogger.event(c,"BOOT_RECEIVED","action="+x.getAction());Intent i=new Intent(c,NativeRadioService.class);if(Build.VERSION.SDK_INT>=26)c.startForegroundService(i);else c.startService(i);}}

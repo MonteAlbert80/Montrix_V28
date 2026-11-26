@@ -1,10 +1,14 @@
 package com.monte.montrix.service.temperature;
 import com.monte.montrix.model.temperature.TemperatureModel;
-/** Converts raw temperature service inputs into presentation-ready immutable state. */
+/** Decodes SYU main-module outside temperature; no integer rounding. */
 public final class TemperatureService {
-    /** Creates a display snapshot from a measured value.
-     * @param degreesF incoming measurement; null/zero represents unavailable
-     * @return immutable component snapshot
-     */
-    public TemperatureModel snapshot(Integer degreesF) { return new TemperatureModel(degreesF == null ? "--°F" : degreesF + "°F"); }
+    public TemperatureModel snapshot(Number degreesF) {
+        double f = degreesF == null ? Double.NaN : degreesF.doubleValue();
+        return new TemperatureModel(Double.isNaN(f) || Double.isInfinite(f) || f < -100 || f > 160 ? null : f);
+    }
+    public TemperatureModel decodeSyu(int raw) {
+        if (raw == 0 || (raw >>> 30) != 0) return snapshot(null);
+        double nativeValue = ((raw & 0x0FFFFFFF) - 1000) / 10.0;
+        return snapshot((raw & 0x10000000) != 0 ? nativeValue : nativeValue * 9.0 / 5.0 + 32.0);
+    }
 }

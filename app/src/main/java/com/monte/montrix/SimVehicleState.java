@@ -6,7 +6,7 @@ import java.util.Locale;
 public final class SimVehicleState {
  public boolean acc=true,cranking=false,pausedBySleep=false,shift=false;
  public int speedMph=0,fuelPercent=70,oilLifePercent=65;
- public Integer temperatureF=75;
+ public Double temperatureF=75.0;
  public double tripMiles=0, odometerMiles=0, shiftStartOdometer=0;
  public double latitude=30.49603, longitude=-97.57347; public float headingDegrees=0; public boolean gpsMoving=false, odometerSeen=false;
  public int speedLimitMph=0; public String door="closed",tpms="normal",battery="normal";
@@ -31,7 +31,7 @@ public final class SimVehicleState {
    case "speed":speedMph=clamp(i.getIntExtra("value",speedMph),0,200);break;
    case "fuel":fuelPercent=clamp(i.getIntExtra("value",fuelPercent),0,100);break;
    case "oil_life":oilLifePercent=clamp(i.getIntExtra("value",oilLifePercent),0,100);break;
-   case "temperature":temperatureF=clamp(i.getIntExtra("value",temperatureF),-60,150);break;
+   case "temperature":{double value=readDecimal(i,"value",Double.NaN);temperatureF=Double.isNaN(value)||Double.isInfinite(value)?null:Math.max(-60.0,Math.min(150.0,value));break;}
    case "warning":warning=safe(i.getStringExtra("text"));break;
    case "clear_warning":warning="none";break;
    case "radio":station=safe(i.getStringExtra("station"));rds=safe(i.getStringExtra("text"));break;
@@ -77,6 +77,6 @@ public final class SimVehicleState {
  static double bearing(double a,double b,double c,double d){double x=Math.sin(Math.toRadians(d-b))*Math.cos(Math.toRadians(c)),y=Math.cos(Math.toRadians(a))*Math.sin(Math.toRadians(c))-Math.sin(Math.toRadians(a))*Math.cos(Math.toRadians(c))*Math.cos(Math.toRadians(d-b));return (Math.toDegrees(Math.atan2(x,y))+360)%360;}
  static int clamp(int x,int a,int b){return Math.max(a,Math.min(b,x));}
  static String safe(String s){return s==null?"":s.replaceAll("[\\r\\n]"," ").substring(0,Math.min(s.length(),120));}
- public String summary(){return String.format(Locale.US,"SIM • %s%s • %d mph • %d°F • fuel %d%% • oil %d%% • %s • %s",acc?"ACC ON":"SLEEP",cranking?" / CRANK":"",speedMph,temperatureF,fuelPercent,oilLifePercent,shift?"SHIFT ON":"SHIFT OFF",warning);}
+ public String summary(){return String.format(Locale.US,"SIM • %s%s • %d mph • %s°F • fuel %d%% • oil %d%% • %s • %s",acc?"ACC ON":"SLEEP",cranking?" / CRANK":"",speedMph,temperatureF==null?"--":String.format(Locale.US,"%.1f",temperatureF),fuelPercent,oilLifePercent,shift?"SHIFT ON":"SHIFT OFF",warning);}
  public String json(){try{JSONObject j=new JSONObject();j.put("acc",acc);j.put("cranking",cranking);j.put("speedMph",speedMph);j.put("fuelPercent",fuelPercent);j.put("oilLifePercent",oilLifePercent);j.put("temperatureF",temperatureF);j.put("warning",warning);j.put("shift",shift);j.put("tripMiles",tripMiles);j.put("odometerMiles",odometerMiles);j.put("latitude",latitude);j.put("longitude",longitude);j.put("headingDegrees",headingDegrees);j.put("speedLimitMph",speedLimitMph);j.put("door",door);j.put("tpms",tpms);j.put("battery",battery);j.put("station",station);j.put("rds",rds);j.put("pausedBySleep",pausedBySleep);return j.toString();}catch(Exception e){return summary();}}
 }

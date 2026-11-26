@@ -1,12 +1,16 @@
 package com.monte.montrix.model.temperature;
 import com.monte.montrix.model.ObservableModel;
-/** Observable presentation state for Temperature; receives prepared values from a coordinator. */
+/** Numeric ambient-temperature state, independent of UI formatting. */
 public final class TemperatureModel extends ObservableModel {
- /** Original dashboard snapshot. */ public final String temperatureText;
- public TemperatureModel(){this.temperatureText="";}
- public TemperatureModel(String text){this.temperatureText=text==null?"":text;this.primary=this.temperatureText;}
- /** Display-ready primary text. */ public String primary="--";
- /** Display-ready secondary text. */ public String secondary="";
- /** Updates the state without calculations. @param main primary text @param detail secondary text */
- public void update(String main,String detail){primary=main;secondary=detail;changed();}
+    public Double degreesF;
+    public Double degreesC;
+    public boolean available;
+    public TemperatureModel() { this((Double)null); }
+    public TemperatureModel(Double f) { assign(f); }
+    private void assign(Double f) {
+        available = f != null && !Double.isNaN(f) && !Double.isInfinite(f);
+        degreesF = available ? f : null;
+        degreesC = available ? (f - 32.0) * 5.0 / 9.0 : null;
+    }
+    public void update(TemperatureModel state) { assign(state.degreesF); changed(); }
 }
